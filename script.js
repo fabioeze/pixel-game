@@ -60,7 +60,7 @@ function verificaState() {
         $(btns).removeClass('active');
 
     } else {
-        console.log('ta fudendo')
+        console.log('aaaaa')
     }
 }
 
