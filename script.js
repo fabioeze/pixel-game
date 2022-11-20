@@ -43,10 +43,10 @@ function stateF(number) {
 
 function verificaState() {
 
-    var seleciona = document.querySelectorAll('.cor'+state+'p');
+    var seleciona = document.querySelectorAll('.cor' + state + 'p');
     var selecionados = $(seleciona).length
-    
-    var totalSeleciona = document.querySelectorAll('.pixel[value="'+state+'"]')
+
+    var totalSeleciona = document.querySelectorAll('.pixel[value="' + state + '"]')
     var totalSelecionados = $(totalSeleciona).length
 
     if (selecionados === totalSelecionados) {
@@ -59,35 +59,58 @@ function verificaState() {
 
         $(btns).removeClass('active');
 
-    } else {
-        console.log('aaaaa')
     }
 }
 
 
-let pixelNotWhite = document.querySelectorAll('span:not([value="0"])')
+const pixelNotWhite = document.querySelectorAll('span:not([value="0"])')
 
 pixelNotWhite.forEach(function (pxSelect) {
 
-    pxSelect.addEventListener("click", function (event) {
+    let mouseEvent = 0
+
+    pxSelect.addEventListener("mousedown", function (event) {
 
         let el = event.target
         let valueString = el.getAttribute("value")
         let value = parseFloat(valueString)
+        mouseEvent = 1
+        console.log(mouseEvent)
 
         if (state === value) {
 
-            $(el).addClass('cor'+value+'p');
+            $(el).addClass('cor' + value + 'p');
 
             verificaState()
 
         } else {
 
-            $(el).css('background','gray')
+            $(el).css('background', 'gray')
 
         }
 
+        $(pixelNotWhite).on('mousemove',function(event) {
+
+            el = event.target
+            valueString = el.getAttribute("value")
+            value = parseFloat(valueString)
+
+            if ((mouseEvent === 1) && (state === value)) {
+                $(el).addClass('cor' + value + 'p');
+
+                verificaState()
+            } else {
+
+                $(el).css('background', 'gray');
+
+            }
+        });
+
+    })
+
+    pxSelect.addEventListener("mouseup", function (event) {
+        mouseEvent = 0
+        $(pixelNotWhite).off("mousemove");
+        console.log('aa')
     })
 })
-
-
