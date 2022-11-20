@@ -119,5 +119,6 @@ if (touch =  Modernizr.touch) {
     var body = document.querySelector('body')
     body.style.background = 'red'
 } else {
-    console.log('foda')
+    var body = document.querySelector('body')
+    body.style.background = 'blue'
 }
