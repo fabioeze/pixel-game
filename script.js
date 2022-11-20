@@ -108,7 +108,7 @@ pixelNotWhite.forEach(function (pxSelect) {
 
     })
 
-    pxSelect.addEventListener("mouseup", function (event) {
+    document.addEventListener("mouseup", function (event) {
         mouseEvent = 0
         $(pixelNotWhite).off("mousemove");
         console.log('aa')
