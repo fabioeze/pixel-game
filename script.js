@@ -117,10 +117,55 @@ pixelNotWhite.forEach(function (pxSelect) {
 
 let touch = Modernizr.touch;
 
-if (touch =  true) {
-    var body = document.querySelector('body')
-    body.style.background = 'red'
-} else {
-    var body = document.querySelector('body')
-    body.style.background = 'blue'
+if (touch = false) {
+
+    pixelNotWhite.forEach(function (pxSelect) {
+
+        let touchEvent = 0
+    
+        pxSelect.addEventListener("touchstart", function (event) {
+    
+            let el = event.target
+            let valueString = el.getAttribute("value")
+            let value = parseFloat(valueString)
+            touchEvent = 1
+            console.log(touchEvent)
+    
+            if (state === value) {
+    
+                $(el).addClass('cor' + value + 'p');
+    
+                verificaState()
+    
+            } else {
+    
+                $(el).css('background', 'gray')
+    
+            }
+    
+            $(pixelNotWhite).on('touchmove',function(event) {
+    
+                el = event.target
+                valueString = el.getAttribute("value")
+                value = parseFloat(valueString)
+    
+                if ((touchEvent === 1) && (state === value)) {
+                    $(el).addClass('cor' + value + 'p');
+    
+                    verificaState()
+                } else {
+    
+                    $(el).css('background', 'gray');
+    
+                }
+            });
+    
+        })
+    
+        document.addEventListener("touchend", function (event) {
+            touchEvent = 0
+            $(pixelNotWhite).off("mousemove");
+            console.log('aa')
+        })
+    })
 }
