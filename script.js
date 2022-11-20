@@ -114,3 +114,10 @@ pixelNotWhite.forEach(function (pxSelect) {
         console.log('aa')
     })
 })
+
+if (touch =  Modernizr.touch) {
+    var body = document.querySelector('body')
+    body.style.background = 'red'
+} else {
+    console.log('foda')
+}
