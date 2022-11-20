@@ -115,7 +115,9 @@ pixelNotWhite.forEach(function (pxSelect) {
     })
 })
 
-if (touch =  Modernizr.touch) {
+let touch = Modernizr.touch;
+
+if (touch =  true) {
     var body = document.querySelector('body')
     body.style.background = 'red'
 } else {
