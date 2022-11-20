@@ -26,6 +26,8 @@
     margin-top: -1px;
     margin-left: -1px;
     font-size: 12px;
+    user-select: none;
+    cursor: pointer;
 }
 
 .pixel:focus-visible {
