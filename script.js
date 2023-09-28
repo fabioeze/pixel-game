@@ -106,19 +106,30 @@ pixelNotWhite.forEach(function (pxSelect) {
     });
 
 
+    pxSelect.addEventListener("touchstart", function (event) {
+        event.preventDefault();
+        let el = event.target
+        let valueString = el.getAttribute("value")
+        let value = parseFloat(valueString)
+        mouseEvent = 1
 
-    pxSelect.addEventListener("touchmove", function (event) {
-        el = event.target
-        valueString = el.getAttribute("value")
-        value = parseFloat(valueString)
-
-        console.log(el)
-        console.log(valueString)
-        console.log(value)
         handleEvent(event, value)
 
-    })
+        $(pxSelect).on('pointermove', function (event) {
+            event.preventDefault();
 
+            el = event.target
+            valueString = el.getAttribute("value")
+            value = parseFloat(valueString)
+
+            console.log(el)
+            console.log(valueString)
+            console.log(value)
+            handleEvent(event, value)
+
+        });
+
+    })
 });
 
 
