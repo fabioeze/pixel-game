@@ -62,6 +62,18 @@ function verificaState() {
     }
 }
 
+function handleEvent(event, value) {
+
+    let el = event.target
+
+    if (state === value) {
+        $(el).addClass('cor' + value + 'p');
+        verificaState()
+    } else {
+        $(el).css('background', 'gray')
+    }
+
+}
 
 const pixelNotWhite = document.querySelectorAll('span:not([value="0"])')
 
@@ -75,24 +87,15 @@ pixelNotWhite.forEach(function (pxSelect) {
         let value = parseFloat(valueString)
         mouseEvent = 1
 
-        if (state === value) {
-            $(el).addClass('cor' + value + 'p');
-            verificaState()
-        } else {
-            $(el).css('background', 'gray')
-        }
+        handleEvent(event, value)
 
         $(pixelNotWhite).on('mousemove', function (event) {
             el = event.target
             valueString = el.getAttribute("value")
             value = parseFloat(valueString)
 
-            if (state === value) {
-                $(el).addClass('cor' + value + 'p');
-                verificaState()
-            } else {
-                $(el).css('background', 'gray');
-            }
+            handleEvent(event, value)
+
         });
 
     })
@@ -102,6 +105,15 @@ pixelNotWhite.forEach(function (pxSelect) {
         $(pixelNotWhite).off("mousemove");
     });
 
+    function handleTouchMove(event) {
+        event.preventDefault();
+        const touches = event.touches;
+        for (let i = 0; i < touches.length; i++) {
+            const touch = touches[i];
+            const value = parseFloat(touch.target.getAttribute("value"));
+            handleEvent(touch, value);
+        }
+    }
 
 
     pxSelect.addEventListener("touchstart", function (event) {
@@ -110,30 +122,14 @@ pixelNotWhite.forEach(function (pxSelect) {
         let value = parseFloat(valueString)
         mouseEvent = 1
 
-        if (state === value) {
-            $(el).addClass('cor' + value + 'p');
-            verificaState()
-        } else {
-            $(el).css('background', 'gray')
-        }
+        handleEvent(event, value);
+    });
+    pxSelect.addEventListener('touchmove', handleTouchMove)
 
-        $(pixelNotWhite).on('touchmove', function (event) {
-            el = event.target
-            valueString = el.getAttribute("value")
-            value = parseFloat(valueString)
 
-            if (state === value) {
-                $(el).addClass('cor' + value + 'p');
-                verificaState()
-            } else {
-                $(el).css('background', 'gray');
-            }
-        });
-
-    })
-
-    document.addEventListener("touchend", function (event) {
-        mouseEvent = 0
-        $(pixelNotWhite).off("touchmove");
-    })
 })
+
+//document.addEventListener("touchend", function (event) {
+ //   mouseEvent = 0
+ //   $(pixelNotWhite).off("touchmove");
+//})
