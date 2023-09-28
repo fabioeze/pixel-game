@@ -105,33 +105,24 @@ pixelNotWhite.forEach(function (pxSelect) {
         $(pixelNotWhite).off("mousemove");
     });
 
-    function handleTouchMove(event) {
-        event.preventDefault();
-        const touches = event.touches;
-        for (let i = 0; i < touches.length; i++) {
-            const touch = touches[i];
-            const value = parseFloat(touch.target.getAttribute("value"));
-            handleEvent(touch, value);
-        }
-    }
 
 
-    pxSelect.addEventListener("touchstart", function (event) {
-        let el = event.target
-        let valueString = el.getAttribute("value")
-        let value = parseFloat(valueString)
-        mouseEvent = 1
+    pxSelect.addEventListener("touchmove", function (event) {
+        el = event.target
+        valueString = el.getAttribute("value")
+        value = parseFloat(valueString)
 
-        handleEvent(event, value);
+        console.log(el)
+        console.log(valueString)
+        console.log(value)
+        handleEvent(event, value)
 
-        pxSelect.addEventListener("touchmove", handleTouchMove(event))
+    })
 
-    });
+});
 
-
-})
 
 //document.addEventListener("touchend", function (event) {
- //   mouseEvent = 0
- //   $(pixelNotWhite).off("touchmove");
+//   mouseEvent = 0
+//   $(pixelNotWhite).off("touchmove");
 //})

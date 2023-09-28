@@ -2,9 +2,12 @@
     margin: 0;
     padding: 0;
 }
-
+body, html {
+    overflow-x: hidden;
+}
 .container {
     text-align: -webkit-center;
+    width: 100vw;
 }
 
 .gridLayout {
