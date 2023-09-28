@@ -1,63 +1,171 @@
+// define as constantes dos pixeis
+
+const pixelVal0a = document.querySelectorAll(".pixel[value='0']")
+
 // define locais brancos
-const pixelVal0a = document.querySelectorAll(".pixel[value='0']");
-const btns = document.querySelectorAll('.btnColorsGrid button');
 
 function branco() {
-    pixelVal0a.forEach(function (el) {
-        el.classList.add('cor0p');
-    });
+
+    $(pixelVal0a).addClass('cor0p');
+
 }
 
-branco();
+branco()
 
-let state = 0;
-let button = 0;
+//Script state
 
-// Função para lidar com eventos de toque ou clique
-function handleTouchEvent(event, value) {
-    if (state === value) {
-        event.target.classList.add('cor' + value + 'p');
-        verificaState();
+let state = 0
+let button = 0
+var btns = document.querySelectorAll('.btnColorsGrid button');
+
+// botões seleção de cor
+
+function stateF(number) {
+
+    if (state === number) {
+
+        button = 0;
+        state = 0
+
+        $(btns).removeClass('active')
+
     } else {
-        event.target.style.background = 'gray';
+
+        state = number
+
+        button = document.querySelector('.btn' + number + 'c')
+
+        $('.remove').removeClass('active')
+        $(button).addClass('active');
+
     }
 }
 
-// Adicione manipuladores de eventos de toque
-pixelVal0a.forEach(function (pxSelect) {
-    pxSelect.addEventListener("touchstart", function (event) {
-        let value = parseFloat(event.target.getAttribute("value"));
-        handleTouchEvent(event, value);
-    });
-
-    pxSelect.addEventListener("touchmove", function (event) {
-        let value = parseFloat(event.target.getAttribute("value"));
-        handleTouchEvent(event, value);
-    });
-});
-
-// Adicione manipulador de evento de toque final
-document.addEventListener("touchend", function (event) {
-    pixelVal0a.forEach(function (el) {
-        el.style.background = ''; // Limpa o estilo de fundo
-    });
-});
-
-// Função para verificar o estado
 function verificaState() {
-    const seleciona = document.querySelectorAll('.cor' + state + 'p');
-    const selecionados = seleciona.length;
 
-    const totalSeleciona = document.querySelectorAll('.pixel[value="' + state + '"]');
-    const totalSelecionados = totalSeleciona.length;
+    var seleciona = document.querySelectorAll('.cor' + state + 'p');
+    var selecionados = $(seleciona).length
+
+    var totalSeleciona = document.querySelectorAll('.pixel[value="' + state + '"]')
+    var totalSelecionados = $(totalSeleciona).length
 
     if (selecionados === totalSelecionados) {
-        state = 0;
-        const buttonSelected = document.querySelector('.active');
+
+        state = 0
+
+        var buttonSelected = document.querySelector('.active');
         buttonSelected.disabled = true;
-        buttonSelected.classList.add('disabled');
-        btns.forEach(function (btn) {
-            btn.classList.remove('active');
-        });
+        $(buttonSelected).addClass('disabled');
+
+        $(btns).removeClass('active');
+
     }
+}
+
+
+const pixelNotWhite = document.querySelectorAll('span:not([value="0"])')
+
+pixelNotWhite.forEach(function (pxSelect) {
+
+    let mouseEvent = 0
+
+    pxSelect.addEventListener("mousedown", function (event) {
+
+        let el = event.target
+        let valueString = el.getAttribute("value")
+        let value = parseFloat(valueString)
+        mouseEvent = 1
+        console.log(mouseEvent)
+
+        if (state === value) {
+
+            $(el).addClass('cor' + value + 'p');
+
+            verificaState()
+
+        } else {
+
+            $(el).css('background', 'gray')
+
+        }
+
+        $(pixelNotWhite).on('mousemove',function(event) {
+
+            el = event.target
+            valueString = el.getAttribute("value")
+            value = parseFloat(valueString)
+
+            if ((mouseEvent === 1) && (state === value)) {
+                $(el).addClass('cor' + value + 'p');
+
+                verificaState()
+            } else {
+
+                $(el).css('background', 'gray');
+
+            }
+        });
+
+    })
+
+    document.addEventListener("mouseup", function (event) {
+        mouseEvent = 0
+        $(pixelNotWhite).off("mousemove");
+        console.log('aa')
+    })
+})
+
+let touch = Modernizr.touch;
+
+if (touch = false) {
+
+    pixelNotWhite.forEach(function (pxSelect) {
+
+        let touchEvent = 0
+    
+        pxSelect.addEventListener("touchstart", function (event) {
+    
+            let el = event.target
+            let valueString = el.getAttribute("value")
+            let value = parseFloat(valueString)
+            touchEvent = 1
+            console.log(touchEvent)
+    
+            if (state === value) {
+    
+                $(el).addClass('cor' + value + 'p');
+    
+                verificaState()
+    
+            } else {
+    
+                $(el).css('background', 'gray')
+    
+            }
+    
+            $(pixelNotWhite).on('touchmove',function(event) {
+    
+                el = event.target
+                valueString = el.getAttribute("value")
+                value = parseFloat(valueString)
+    
+                if ((touchEvent === 1) && (state === value)) {
+                    $(el).addClass('cor' + value + 'p');
+    
+                    verificaState()
+                } else {
+    
+                    $(el).css('background', 'gray');
+    
+                }
+            });
+    
+        })
+    
+        document.addEventListener("touchend", function (event) {
+            touchEvent = 0
+            $(pixelNotWhite).off("mousemove");
+            console.log('aa')
+        })
+    })
 }
