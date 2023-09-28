@@ -124,7 +124,7 @@ pixelNotWhite.forEach(function (pxSelect) {
 
         handleEvent(event, value);
 
-        $(pixelNotWhite).on('touchmove', handleTouchMove)
+        pxSelect.addEventListener("touchmove", handleTouchMove(event))
 
     });
 
