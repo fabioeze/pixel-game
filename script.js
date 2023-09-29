@@ -75,6 +75,19 @@ function handleEvent(event, value) {
 
 }
 
+function handleEventMove(event, value) {
+
+    let el = event.target
+
+    if (state === value) {
+        $(el).addClass('cor' + value + 'p');
+        verificaState()
+    } else {
+        $(el).css('background', 'gray')
+    }
+
+}
+
 const pixelNotWhite = document.querySelectorAll('span:not([value="0"])')
 
 pixelNotWhite.forEach(function (pxSelect) {
@@ -107,7 +120,7 @@ pixelNotWhite.forEach(function (pxSelect) {
 
 
     pxSelect.addEventListener("touchstart", function (event) {
-        event.preventDefault();
+        // event.preventDefault();
         let el = event.target
         let valueString = el.getAttribute("value")
         let value = parseFloat(valueString)
@@ -115,7 +128,7 @@ pixelNotWhite.forEach(function (pxSelect) {
 
         handleEvent(event, value)
 
-        $(pxSelect).on('touchmove', function (event) {
+        $(pixelNotWhite).on('touchmove', function (event) {
             const touches = event.touches;
             // Itere sobre os toques
             for (let i = 0; i < touches.length; i++) {
@@ -123,13 +136,22 @@ pixelNotWhite.forEach(function (pxSelect) {
 
                 // Obtenha o elemento específico tocado por cada toque
                 const touchedElement = document.elementFromPoint(touch.clientX, touch.clientY);
-
-                // Faça algo com o elemento tocado, se necessário
-                console.log("Element tocado: ", touchedElement);
-
                 valueString = touchedElement.getAttribute("value")
+                value = parseFloat(valueString)
 
-               handleEvent(event, value)
+                if (state === value) {
+                    $(touchedElement).addClass('cor' + value + 'p');
+                    verificaState()
+                } else {
+                    $(touchedElement).css('background', 'gray')
+                }
+            
+                // Faça algo com o elemento tocado, se necessário
+                //console.log("Element tocado: ", touchedElement);
+
+
+
+               //handleEvent(event, value)
 
             }});
 
