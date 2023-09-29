@@ -111,23 +111,27 @@ pixelNotWhite.forEach(function (pxSelect) {
         let el = event.target
         let valueString = el.getAttribute("value")
         let value = parseFloat(valueString)
-        mouseEvent = 1
+        //mouseEvent = 1
 
         handleEvent(event, value)
 
-        $(pxSelect).on('pointermove', function (event) {
-            event.preventDefault();
+        $(pxSelect).on('touchmove', function (event) {
+            const touches = event.touches;
+            // Itere sobre os toques
+            for (let i = 0; i < touches.length; i++) {
+                const touch = touches[i];
 
-            el = event.target
-            valueString = el.getAttribute("value")
-            value = parseFloat(valueString)
+                // Obtenha o elemento específico tocado por cada toque
+                const touchedElement = document.elementFromPoint(touch.clientX, touch.clientY);
 
-            console.log(el)
-            console.log(valueString)
-            console.log(value)
-            handleEvent(event, value)
+                // Faça algo com o elemento tocado, se necessário
+                console.log("Element tocado: ", touchedElement);
 
-        });
+                valueString = touchedElement.getAttribute("value")
+
+               handleEvent(event, value)
+
+            }});
 
     })
 });
