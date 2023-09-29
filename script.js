@@ -139,19 +139,13 @@ pixelNotWhite.forEach(function (pxSelect) {
                 valueString = touchedElement.getAttribute("value")
                 value = parseFloat(valueString)
 
-                if (state === value) {
+                if ((touchedElement.getAttribute("value") !== "0") && (state === value) && ($(touchedElement).hasClass('pixel')))  {
                     $(touchedElement).addClass('cor' + value + 'p');
                     verificaState()
-                } else {
-                    $(touchedElement).css('background', 'gray')
+                } 
+                if ((touchedElement.getAttribute("value") !== "0") && ($(touchedElement).hasClass('pixel'))) {
+                    $(touchedElement).css('background', 'gray');
                 }
-            
-                // Faça algo com o elemento tocado, se necessário
-                //console.log("Element tocado: ", touchedElement);
-
-
-
-               //handleEvent(event, value)
 
             }});
 
